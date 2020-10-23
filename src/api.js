@@ -15,7 +15,24 @@ const getDonors = () => {
   })
 }
 
+const createDonation = (data) => {
+  return fetch("/.netlify/functions/createDonation", {
+    body: JSON.stringify(data),
+    method: "POST",
+  }).then((res) => {
+    return res.json()
+  })
+}
+
+const getDonations = () => {
+  return fetch("/.netlify/functions/allDonation").then((res) => {
+    return res.json()
+  })
+}
+
 export default {
   createDonor: createDonor,
   getDonors: getDonors,
+  createDonation: createDonation,
+  getDonations: getDonations,
 }
