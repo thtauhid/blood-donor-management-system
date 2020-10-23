@@ -22,7 +22,7 @@ const blood_groups = [
   },
 ]
 
-function Try() {
+function CreateDonor() {
   const [name, setName] = useState("")
   const [bloodGroup, setBloodGroup] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
@@ -87,4 +87,4 @@ function Try() {
   )
 }
 
-export default Try
+export default CreateDonor
