@@ -35,20 +35,20 @@ export default class DonorList extends Component {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>01</TableCell>
-              <TableCell>02</TableCell>
-              <TableCell>03</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Blood Group</TableCell>
+              <TableCell>Phone Number</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {this.state.donors.map((donor) => {
-              const { name, blood_group } = donor.data
+              const { name, blood_group, phone_number } = donor.data
               const { id } = donor.ref["@ref"]
               return (
                 <TableRow key={id}>
                   <TableCell>{name}</TableCell>
                   <TableCell>{blood_group}</TableCell>
-                  <TableCell>03</TableCell>
+                  <TableCell>{phone_number}</TableCell>
                 </TableRow>
               )
             })}
