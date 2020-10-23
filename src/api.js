@@ -1,6 +1,6 @@
 // API Methods to call functions
 
-const create = (data) => {
+const createDonor = (data) => {
   return fetch("/.netlify/functions/createDonor", {
     body: JSON.stringify(data),
     method: "POST",
@@ -9,6 +9,13 @@ const create = (data) => {
   })
 }
 
+const getDonors = () => {
+  return fetch("/.netlify/functions/allDonor").then((res) => {
+    return res.json()
+  })
+}
+
 export default {
-  create,
+  createDonor: createDonor,
+  getDonors: getDonors,
 }
