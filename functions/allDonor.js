@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
   })
 
   return client
-    .query(q.Paginate(q.Match(q.Ref("indexes/all"))))
+    .query(q.Paginate(q.Match(q.Ref("indexes/all_donors"))))
 
     .then((res) => {
       const donorRefs = res.data
