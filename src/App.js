@@ -1,16 +1,37 @@
 import React, { useState } from "react"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import Home from "./Home"
 import DonorList from "./DonorList"
 import CreateDonor from "./CreateDonor"
 import Donations from "./Donations"
 import CreateDonation from "./CreateDonation"
-// import Try from "./Try.js"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Button from "@material-ui/core/Button"
+import IconButton from "@material-ui/core/IconButton"
+import Typography from "@material-ui/core/Typography"
+import MenuIcon from "@material-ui/core/Menu"
+
+import HomeIcon from "@material-ui/icons/Home"
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined"
 
 const { netlifyIdentity } = window
 
 const login = () => {
   netlifyIdentity.open()
+}
+
+const Routes = () => {
+  return (
+    <div>
+      <Route path="/" exact component={Home} />
+      <Route path="/donors" exact component={DonorList} />
+      <Route path="/donors/create" component={CreateDonor} />
+      <Route path="/donations" exact component={Donations} />
+      <Route path="/donations/create" component={CreateDonation} />
+    </div>
+  )
 }
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -38,6 +59,7 @@ const App = () => {
     }
   })
   // Triggers when user logs in
+
   netlifyIdentity.on("login", (user) => {
     setLoggedIn(true)
     // Set username
@@ -51,14 +73,35 @@ const App = () => {
 
   return (
     <React.Fragment>
-      {loggedIn ? `Logged In as ${userName}` : `Logged Out`}
-      <button onClick={login}>Login</button>
       <Router>
-        <Route path="/" exact component={Home} />
-        <Route path="/donors" exact component={DonorList} />
-        <Route path="/donors/create" component={CreateDonor} />
-        <Route path="/donations" exact component={Donations} />
-        <Route path="/donations/create" component={CreateDonation} />
+        <AppBar position="static">
+          <Toolbar>
+            <Link to="/">
+              <IconButton
+                edge="start"
+                style={{
+                  color: "white",
+                }}
+                aria-label="menu"
+              >
+                <HomeIcon />
+              </IconButton>
+            </Link>
+            <Typography
+              className="username"
+              style={{
+                padding: "0 15px",
+              }}
+              variant="p"
+            >
+              {loggedIn ? `Logged In as ${userName}` : `Logged Out`}
+            </Typography>
+            <Button variant="contained" color="secondary" onClick={login}>
+              {loggedIn ? <LockOutlinedIcon /> : <LockOutlinedIcon />}
+            </Button>
+          </Toolbar>
+        </AppBar>
+        {loggedIn ? <Routes /> : `Not Logged In`}
       </Router>
     </React.Fragment>
   )
