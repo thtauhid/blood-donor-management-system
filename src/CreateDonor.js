@@ -20,12 +20,30 @@ const blood_groups = [
     value: "O+",
     label: "O+",
   },
+  {
+    value: "A-",
+    label: "A-",
+  },
+  {
+    value: "B-",
+    label: "B-",
+  },
+  {
+    value: "AB-",
+    label: "AB-",
+  },
+  {
+    value: "O-",
+    label: "O-",
+  },
 ]
 
 function CreateDonor() {
   const [name, setName] = useState("")
   const [bloodGroup, setBloodGroup] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
+  const [success, setSuccess] = useState(false)
+  const [failed, setFailed] = useState(false)
 
   const changeName = (event) => {
     setName(event.target.value)
@@ -36,7 +54,8 @@ function CreateDonor() {
   const changePhoneNumber = (event) => {
     setPhoneNumber(event.target.value)
   }
-  const submitted = () => {
+  const submitted = (e) => {
+    e.preventDefault()
     api
       .createDonor({
         name: name,
@@ -45,13 +64,20 @@ function CreateDonor() {
       })
       .then((res) => {
         console.log("Success: ", res)
+        setSuccess(true)
+        setName("")
+        setBloodGroup("")
+        setPhoneNumber("")
       })
       .catch((err) => {
         console.log("Error: ", err)
+        setFailed(true)
       })
   }
   return (
-    <form>
+    <form onSubmit={submitted}>
+      {success ? `Added` : ``}
+      {failed ? `Failed` : ``}
       <TextField
         id="standard-name"
         label="Enter Donor Name"
@@ -80,9 +106,7 @@ function CreateDonor() {
         value={phoneNumber}
         onChange={changePhoneNumber}
       />
-      <button value="Submit" onClick={submitted}>
-        Submit
-      </button>
+      <button value="Submit">Submit</button>
     </form>
   )
 }
