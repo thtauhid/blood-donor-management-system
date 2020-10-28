@@ -3,12 +3,12 @@ import { Table } from "antd"
 
 import api from "./api"
 
-const DonorList = () => {
+const DonationList = () => {
   const [fullData, setFullData] = useState([""])
 
   useEffect(() => {
     api
-      .getDonors()
+      .getDonations()
 
       .then((donors) => {
         const fullData = donors.map((donor) => {
@@ -50,4 +50,4 @@ const DonorList = () => {
   )
 }
 
-export default DonorList
+export default DonationList

@@ -1,114 +1,76 @@
-import React, { useState } from "react"
-import TextField from "@material-ui/core/TextField"
-import MenuItem from "@material-ui/core/MenuItem"
-
+import React from "react"
+import { Form, Input, Button, Select, Alert } from "antd"
 import api from "./api"
-const blood_groups = [
-  {
-    value: "A+",
-    label: "A+",
-  },
-  {
-    value: "B+",
-    label: "B+",
-  },
-  {
-    value: "AB+",
-    label: "AB+",
-  },
-  {
-    value: "O+",
-    label: "O+",
-  },
-  {
-    value: "A-",
-    label: "A-",
-  },
-  {
-    value: "B-",
-    label: "B-",
-  },
-  {
-    value: "AB-",
-    label: "AB-",
-  },
-  {
-    value: "O-",
-    label: "O-",
-  },
-]
 
-function CreateDonation() {
-  const [name, setName] = useState("")
-  const [bloodGroup, setBloodGroup] = useState("")
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [success, setSuccess] = useState(false)
-  const [failed, setFailed] = useState(false)
+const { Option } = Select
 
-  const changeName = (event) => {
-    setName(event.target.value)
-  }
-  const changeBloodGroup = (event) => {
-    setBloodGroup(event.target.value)
-  }
-  const changePhoneNumber = (event) => {
-    setPhoneNumber(event.target.value)
-  }
-  const submitted = (e) => {
-    e.preventDefault()
-    api
-      .createDonation({
-        name: name,
-        phone_number: phoneNumber,
-        blood_group: bloodGroup,
-      })
-      .then((res) => {
-        console.log("Success: ", res)
-        setSuccess(true)
-        setName("")
-        setBloodGroup("")
-        setPhoneNumber("")
-      })
-      .catch((err) => {
-        console.log("Error: ", err)
-        setFailed(true)
-      })
-  }
+const onFinish = (values) => {
+  api
+    .createDonation(values)
+
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  console.log("Success:", values)
+}
+
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo)
+}
+
+const CreateDonor = () => {
   return (
-    <form onSubmit={submitted}>
-      {success ? `Added` : ``}
-      {failed ? `Failed` : ``}
-      <TextField
-        id="standard-name"
-        label="Enter Donor Name"
-        value={name}
-        onChange={changeName}
-      />
-      <br />
-      <TextField
-        id="standard-select-blood-group"
-        select
-        label="Select Blood Group"
-        value={bloodGroup}
-        onChange={changeBloodGroup}
-        helperText="Please select your blood group"
+    <>
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
-        {blood_groups.map((blood_group) => (
-          <MenuItem key={blood_group.value} value={blood_group.value}>
-            {blood_group.label}
-          </MenuItem>
-        ))}
-      </TextField>
-      <br />
-      <TextField
-        id="standard-phone-number"
-        label="Enter Phone Number"
-        value={phoneNumber}
-        onChange={changePhoneNumber}
-      />
-      <button value="Submit">Submit</button>
-    </form>
+        <Form.Item
+          name="name"
+          rules={[{ required: true, message: "Please input your username!" }]}
+        >
+          <Input placeholder="Donor Name" />
+        </Form.Item>
+
+        <Form.Item
+          name="blood_group"
+          hasFeedback
+          rules={[{ required: true, message: "Please select your country!" }]}
+        >
+          <Select placeholder="Select Blood Group">
+            <Option value="A+">A+</Option>
+            <Option value="B+">B+</Option>
+            <Option value="AB+">AB+</Option>
+            <Option value="O+">O+</Option>
+            <Option value="A-">A-</Option>
+            <Option value="B-">B-</Option>
+            <Option value="AB-">AB-</Option>
+            <Option value="O-">O-</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="phone_number"
+          rules={[
+            { required: true, message: "Please input your phone number!" },
+          ]}
+        >
+          <Input placeholder="Donor Phone Number" />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   )
 }
 
-export default CreateDonation
+export default CreateDonor
