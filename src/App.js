@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { Route } from "react-router-dom"
-import { Layout, Breadcrumb, Alert } from "antd"
+import { Layout, Breadcrumb } from "antd"
 import Sidebar from "./Sidebar"
 import "antd/dist/antd.css"
 
@@ -10,7 +10,6 @@ import DonationList from "./DonationList"
 import CreateDonation from "./CreateDonation"
 
 const { Content, Footer } = Layout
-const { netlifyIdentity } = window
 
 const Routes = () => {
   return (
@@ -24,19 +23,6 @@ const Routes = () => {
 }
 
 const App = () => {
-  netlifyIdentity.on("init", (user) => {
-    if (user) {
-      setLoggedIn(true)
-
-      setUserName(user.user_metadata.full_name)
-    } else {
-      setLoggedIn(false)
-    }
-  })
-
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [userName, setUserName] = useState("")
-
   return (
     <>
       <Layout style={{ minHeight: "100vh" }}>
@@ -51,11 +37,7 @@ const App = () => {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              {loggedIn ? (
-                <Routes />
-              ) : (
-                <Alert message="Please login" type="error" />
-              )}
+              <Routes />
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
