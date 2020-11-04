@@ -1,27 +1,31 @@
-import React from "react"
+import React, { useState } from "react"
 import { Form, Input, Button, Select, Alert } from "antd"
 import api from "./api"
 
 const { Option } = Select
 
-const onFinish = (values) => {
-  api
-    .createDonor(values)
-
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  console.log("Success:", values)
-}
-
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo)
-}
-
 const CreateDonor = () => {
+  const [success, setSuccess] = useState(false)
+  const [failure, setFailure] = useState(false)
+
+  const onFinish = (values) => {
+    api
+      .createDonor(values)
+
+      .then((res) => {
+        console.log(res)
+        setSuccess(true)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    console.log("Success:", values)
+  }
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo)
+    setFailure(true)
+  }
   return (
     <>
       <Form
@@ -32,7 +36,7 @@ const CreateDonor = () => {
       >
         <Form.Item
           name="name"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          rules={[{ required: true, message: "Please input donor name!" }]}
         >
           <Input placeholder="Donor Name" />
         </Form.Item>
@@ -40,7 +44,9 @@ const CreateDonor = () => {
         <Form.Item
           name="blood_group"
           hasFeedback
-          rules={[{ required: true, message: "Please select your country!" }]}
+          rules={[
+            { required: true, message: "Please select your blood group!" },
+          ]}
         >
           <Select placeholder="Select Blood Group">
             <Option value="A+">A+</Option>
@@ -68,6 +74,8 @@ const CreateDonor = () => {
             Submit
           </Button>
         </Form.Item>
+        {success ? <Alert message="Donor added" type="success" /> : ""}
+        {failure ? <Alert message="Failed to add donor" type="warning" /> : ""}
       </Form>
     </>
   )
