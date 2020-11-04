@@ -41,8 +41,16 @@ const App = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Coded with 🖤 by{" "}
-            <a href="https://github.com/thtauhid" target="_blank">
+            Coded with{" "}
+            <span role="img" aria-label="love">
+              🖤
+            </span>
+            by
+            <a
+              href="https://github.com/thtauhid"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Tauhid
             </a>
           </Footer>

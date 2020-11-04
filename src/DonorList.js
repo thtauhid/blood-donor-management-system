@@ -25,7 +25,7 @@ const DonorList = () => {
         setFullData(fullData)
         console.log(fullData)
       })
-  }, {})
+  }, [])
   const columns = [
     {
       title: "Name",
