@@ -1,53 +1,57 @@
-import React, { useEffect, useState } from "react"
-import { Table } from "antd"
+import React, { useEffect, useState } from 'react'
+import { Table, Breadcrumb } from 'antd'
 
-import api from "./api"
+import api from './api'
 
 const DonationList = () => {
-  const [fullData, setFullData] = useState([""])
+	const [fullData, setFullData] = useState([''])
 
-  useEffect(() => {
-    api
-      .getDonations()
+	useEffect(() => {
+		api
+			.getDonations()
 
-      .then((donors) => {
-        const fullData = donors.map((donor) => {
-          const { id: key } = donor.ref["@ref"]
-          const { name, blood_group, phone_number } = donor.data
-          return {
-            key,
-            name,
-            blood_group,
-            phone_number,
-          }
-        })
+			.then((donors) => {
+				const fullData = donors.map((donor) => {
+					const { id: key } = donor.ref['@ref']
+					const { name, blood_group, phone_number } = donor.data
+					return {
+						key,
+						name,
+						blood_group,
+						phone_number,
+					}
+				})
 
-        setFullData(fullData)
-        console.log(fullData)
-      })
-  }, [])
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Contact Number",
-      dataIndex: "phone_number",
-      key: "phone_number",
-    },
-    {
-      title: "Blood Group",
-      dataIndex: "blood_group",
-      key: "blood_group",
-    },
-  ]
-  return (
-    <>
-      <Table columns={columns} dataSource={fullData} />
-    </>
-  )
+				setFullData(fullData)
+				console.log(fullData)
+			})
+	}, [])
+	const columns = [
+		{
+			title: 'Name',
+			dataIndex: 'name',
+			key: 'name',
+		},
+		{
+			title: 'Contact Number',
+			dataIndex: 'phone_number',
+			key: 'phone_number',
+		},
+		{
+			title: 'Blood Group',
+			dataIndex: 'blood_group',
+			key: 'blood_group',
+		},
+	]
+	return (
+		<>
+			<Breadcrumb style={{ margin: '16px 0' }}>
+				<Breadcrumb.Item>Donation</Breadcrumb.Item>
+				<Breadcrumb.Item>List</Breadcrumb.Item>
+			</Breadcrumb>
+			<Table columns={columns} dataSource={fullData} />
+		</>
+	)
 }
 
 export default DonationList
