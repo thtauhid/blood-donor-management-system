@@ -8,6 +8,7 @@ import DonorList from './DonorList'
 import CreateDonor from './CreateDonor'
 import DonationList from './DonationList'
 import CreateDonation from './CreateDonation'
+import DonorProfile from './DonorProfile'
 
 const { Content, Footer } = Layout
 
@@ -16,6 +17,7 @@ const Routes = () => {
 		<>
 			<Route path='/' exact component={DonorList} />
 			<Route path='/donor/create' component={CreateDonor} />
+			<Route path='/donor/:id' component={DonorProfile} />
 			<Route path='/donations' exact component={DonationList} />
 			<Route path='/donation/create' component={CreateDonation} />
 		</>

@@ -33,14 +33,14 @@ const DonationList = () => {
 			key: 'name',
 		},
 		{
-			title: 'Contact Number',
-			dataIndex: 'phone_number',
-			key: 'phone_number',
-		},
-		{
 			title: 'Blood Group',
 			dataIndex: 'blood_group',
 			key: 'blood_group',
+		},
+		{
+			title: 'Contact Number',
+			dataIndex: 'phone_number',
+			key: 'phone_number',
 		},
 	]
 	return (

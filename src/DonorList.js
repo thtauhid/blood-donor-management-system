@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Breadcrumb } from 'antd'
+import { Link } from 'react-router-dom'
 
 import api from './api'
 
@@ -31,16 +32,17 @@ const DonorList = () => {
 			title: 'Name',
 			dataIndex: 'name',
 			key: 'name',
-		},
-		{
-			title: 'Contact Number',
-			dataIndex: 'phone_number',
-			key: 'phone_number',
+			render: (text, record) => <Link to={`/donor/${record.key}`}>{text}</Link>,
 		},
 		{
 			title: 'Blood Group',
 			dataIndex: 'blood_group',
 			key: 'blood_group',
+		},
+		{
+			title: 'Contact Number',
+			dataIndex: 'phone_number',
+			key: 'phone_number',
 		},
 	]
 	return (
