@@ -21,7 +21,7 @@ const DonorProfile = (props) => {
 			.catch((err) => {
 				console.log('Error: ', err)
 			})
-	}, [])
+	}, [id])
 
 	return (
 		<>
