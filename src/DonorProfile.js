@@ -8,6 +8,8 @@ const DonorProfile = (props) => {
 	const [name, setName] = useState('')
 	const [bloodGroup, setBloodGroup] = useState('')
 	const [phoneNumber, setPhoneNumber] = useState('')
+	const [dateOfBirth, setDateOfBirth] = useState('')
+	const [address, setAddress] = useState('')
 
 	useEffect(() => {
 		api
@@ -17,11 +19,17 @@ const DonorProfile = (props) => {
 				setName(donor.data.name)
 				setBloodGroup(donor.data.blood_group)
 				setPhoneNumber(donor.data.phone_number)
+				setDateOfBirth(donor.data.dob)
+				setAddress(donor.data.address)
 			})
 			.catch((err) => {
 				console.log('Error: ', err)
 			})
 	}, [id])
+
+	const [month, date, year] = new Date(dateOfBirth)
+		.toLocaleDateString('en-US')
+		.split('/')
 
 	return (
 		<>
@@ -35,6 +43,10 @@ const DonorProfile = (props) => {
 				<p>Name: {name}</p>
 				<p>Blood Group: {bloodGroup}</p>
 				<p>Phone Number: {phoneNumber}</p>
+				<p>Address: {address}</p>
+				<p>
+					Date of Birth: {date}-{month}-{year}
+				</p>
 			</Card>
 		</>
 	)

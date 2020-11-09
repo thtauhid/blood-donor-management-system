@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Select, Alert, Breadcrumb } from 'antd'
+import {
+	Form,
+	Input,
+	Button,
+	Select,
+	Alert,
+	Breadcrumb,
+	DatePicker,
+} from 'antd'
 import api from './api'
 
 const { Option } = Select
@@ -69,13 +77,21 @@ const CreateDonor = () => {
 					<Input placeholder='Donor Phone Number' />
 				</Form.Item>
 
+				<Form.Item name='address'>
+					<Input placeholder='Address' />
+				</Form.Item>
+
+				<Form.Item name='dob'>
+					<DatePicker placeholder='Date of Birth' />
+				</Form.Item>
+
 				<Form.Item>
 					<Button type='primary' htmlType='submit'>
 						Submit
 					</Button>
 				</Form.Item>
 				{success ? <Alert message='Donor added' type='success' /> : ''}
-				{failure ? <Alert message='Failed to add donor' type='warning' /> : ''}
+				{failure ? <Alert message='Failed to add donor' type='error' /> : ''}
 			</Form>
 		</>
 	)
